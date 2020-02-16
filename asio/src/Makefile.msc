@@ -150,6 +150,7 @@ UNIT_TEST_EXES = \
 	tests\unit\generic\seq_packet_protocol.exe \
 	tests\unit\generic\stream_protocol.exe \
 	tests\unit\high_resolution_timer.exe \
+	tests\unit\inline_executor.exe \
 	tests\unit\io_context.exe \
 	tests\unit\io_context_strand.exe \
 	tests\unit\ip\address.exe \
@@ -190,8 +191,6 @@ UNIT_TEST_EXES = \
 	tests\unit\steady_timer.exe \
 	tests\unit\strand.exe \
 	tests\unit\streambuf.exe \
-	tests\unit\system_context.exe \
-	tests\unit\system_executor.exe \
 	tests\unit\system_timer.exe \
 	tests\unit\this_coro.exe \
 	tests\unit\thread.exe \

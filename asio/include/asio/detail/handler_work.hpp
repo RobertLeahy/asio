@@ -18,6 +18,7 @@
 #include "asio/detail/config.hpp"
 #include "asio/associated_executor.hpp"
 #include "asio/detail/handler_invoke_helpers.hpp"
+#include "asio/inline_executor.hpp"
 
 #include "asio/detail/push_options.hpp"
 
@@ -28,7 +29,7 @@ namespace detail {
 // through either the new executors framework or the old invocaton hook. The
 // primary template uses the new executors framework.
 template <typename Handler,
-    typename IoExecutor = system_executor, typename HandlerExecutor
+    typename IoExecutor = inline_executor, typename HandlerExecutor
       = typename associated_executor<Handler, IoExecutor>::type>
 class handler_work
 {
@@ -79,30 +80,6 @@ private:
 
   IoExecutor io_executor_;
   HandlerExecutor executor_;
-};
-
-// This specialisation dispatches a handler through the old invocation hook.
-// The specialisation is not strictly required for correctness, as the
-// system_executor will dispatch through the hook anyway. However, by doing
-// this we avoid an extra copy of the handler.
-template <typename Handler>
-class handler_work<Handler, system_executor, system_executor>
-{
-public:
-  explicit handler_work(Handler&) ASIO_NOEXCEPT {}
-  static void start(Handler&) ASIO_NOEXCEPT {}
-  ~handler_work() {}
-
-  template <typename Function>
-  void complete(Function& function, Handler& handler)
-  {
-    asio_handler_invoke_helpers::invoke(function, handler);
-  }
-
-private:
-  // Disallow copying and assignment.
-  handler_work(const handler_work&);
-  handler_work& operator=(const handler_work&);
 };
 
 } // namespace detail

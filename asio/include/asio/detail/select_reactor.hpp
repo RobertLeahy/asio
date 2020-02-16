@@ -8,6 +8,8 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include "asio/detail/scheduler.hpp"
+
 #ifndef ASIO_DETAIL_SELECT_REACTOR_HPP
 #define ASIO_DETAIL_SELECT_REACTOR_HPP
 
@@ -30,6 +32,7 @@
 #include "asio/detail/op_queue.hpp"
 #include "asio/detail/reactor_op.hpp"
 #include "asio/detail/reactor_op_queue.hpp"
+#include "asio/detail/scheduler.hpp"
 #include "asio/detail/select_interrupter.hpp"
 #include "asio/detail/socket_types.hpp"
 #include "asio/detail/timer_queue_base.hpp"

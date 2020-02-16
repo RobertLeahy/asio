@@ -22,8 +22,8 @@
 #include "asio/detail/type_traits.hpp"
 #include "asio/detail/variadic_templates.hpp"
 #include "asio/executor_work_guard.hpp"
+#include "asio/inline_executor.hpp"
 #include "asio/is_executor.hpp"
-#include "asio/system_executor.hpp"
 
 #include "asio/detail/push_options.hpp"
 
@@ -38,7 +38,7 @@ namespace detail
   struct composed_work<void()>
   {
     composed_work() ASIO_NOEXCEPT
-      : head_(system_executor())
+      : head_(inline_executor())
     {
     }
 
@@ -47,8 +47,8 @@ namespace detail
       head_.reset();
     }
 
-    typedef system_executor head_type;
-    executor_work_guard<system_executor> head_;
+    typedef inline_executor head_type;
+    executor_work_guard<inline_executor> head_;
   };
 
   inline composed_work<void()> make_composed_work()

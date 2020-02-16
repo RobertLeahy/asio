@@ -20,9 +20,10 @@
 #include "asio/async_result.hpp"
 #include "asio/detail/memory.hpp"
 #include "asio/error_code.hpp"
+#include "asio/execution_context.hpp"
+#include "asio/inline_executor.hpp"
 #include "asio/packaged_task.hpp"
 #include "asio/system_error.hpp"
-#include "asio/system_executor.hpp"
 
 #include "asio/detail/push_options.hpp"
 
@@ -211,7 +212,7 @@ public:
 
   execution_context& context() const ASIO_NOEXCEPT
   {
-    return system_executor().context();
+    return inline_executor().context();
   }
 
   void on_work_started() const ASIO_NOEXCEPT {}
@@ -226,14 +227,14 @@ public:
   template <typename F, typename A>
   void post(ASIO_MOVE_ARG(F) f, const A& a) const
   {
-    system_executor().post(
+    inline_executor().defer(
         promise_invoker<T, F>(p_, ASIO_MOVE_CAST(F)(f)), a);
   }
 
   template <typename F, typename A>
   void defer(ASIO_MOVE_ARG(F) f, const A& a) const
   {
-    system_executor().defer(
+    inline_executor().defer(
         promise_invoker<T, F>(p_, ASIO_MOVE_CAST(F)(f)), a);
   }
 

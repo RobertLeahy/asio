@@ -8,6 +8,8 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include "asio/detail/scheduler.hpp"
+
 #ifndef ASIO_DETAIL_DEV_POLL_REACTOR_HPP
 #define ASIO_DETAIL_DEV_POLL_REACTOR_HPP
 

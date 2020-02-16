@@ -50,6 +50,7 @@ check_PROGRAMS = \
 	unit/generic/seq_packet_protocol \
 	unit/generic/stream_protocol \
 	unit/high_resolution_timer \
+	unit/inline_executor \
 	unit/io_context \
 	unit/io_context_strand \
 	unit/ip/address \
@@ -99,8 +100,6 @@ check_PROGRAMS = \
 	unit/steady_timer \
 	unit/strand \
 	unit/streambuf \
-	unit/system_context \
-	unit/system_executor \
 	unit/system_timer \
 	unit/this_coro \
 	unit/thread \
@@ -184,6 +183,7 @@ TESTS = \
 	unit/executor \
 	unit/executor_work_guard \
 	unit/high_resolution_timer \
+	unit/inline_executor \
 	unit/io_context \
 	unit/io_context_strand \
 	unit/ip/address \
@@ -233,8 +233,6 @@ TESTS = \
 	unit/steady_timer \
 	unit/strand \
 	unit/streambuf \
-	unit/system_context \
-	unit/system_executor \
 	unit/system_timer \
 	unit/this_coro \
 	unit/thread \
@@ -328,6 +326,7 @@ unit_generic_raw_protocol_SOURCES = unit/generic/raw_protocol.cpp
 unit_generic_seq_packet_protocol_SOURCES = unit/generic/seq_packet_protocol.cpp
 unit_generic_stream_protocol_SOURCES = unit/generic/stream_protocol.cpp
 unit_high_resolution_timer_SOURCES = unit/high_resolution_timer.cpp
+unit_inline_executor_SOURCES = unit/inline_executor.cpp
 unit_io_context_SOURCES = unit/io_context.cpp
 unit_io_context_strand_SOURCES = unit/io_context_strand.cpp
 unit_ip_address_SOURCES = unit/ip/address.cpp
@@ -377,8 +376,6 @@ unit_socket_base_SOURCES = unit/socket_base.cpp
 unit_steady_timer_SOURCES = unit/steady_timer.cpp
 unit_strand_SOURCES = unit/strand.cpp
 unit_streambuf_SOURCES = unit/streambuf.cpp
-unit_system_context_SOURCES = unit/system_context.cpp
-unit_system_executor_SOURCES = unit/system_executor.cpp
 unit_system_timer_SOURCES = unit/system_timer.cpp
 unit_this_coro_SOURCES = unit/this_coro.cpp
 unit_thread_SOURCES = unit/thread.cpp

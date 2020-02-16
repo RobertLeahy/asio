@@ -22,7 +22,6 @@
 #include "asio/detail/memory.hpp"
 #include "asio/detail/recycling_allocator.hpp"
 #include "asio/executor.hpp"
-#include "asio/system_executor.hpp"
 
 #include "asio/detail/push_options.hpp"
 
@@ -246,87 +245,6 @@ private:
   };
 };
 
-// Polymorphic allocator specialisation for system_executor.
-template <typename Allocator>
-class executor::impl<system_executor, Allocator>
-  : public executor::impl_base
-{
-public:
-  static impl_base* create(const system_executor&,
-      const Allocator& = Allocator())
-  {
-    return &detail::global<impl<system_executor, std::allocator<void> > >();
-  }
-
-  impl()
-    : impl_base(true)
-  {
-  }
-
-  impl_base* clone() const ASIO_NOEXCEPT
-  {
-    return const_cast<impl_base*>(static_cast<const impl_base*>(this));
-  }
-
-  void destroy() ASIO_NOEXCEPT
-  {
-  }
-
-  void on_work_started() ASIO_NOEXCEPT
-  {
-    executor_.on_work_started();
-  }
-
-  void on_work_finished() ASIO_NOEXCEPT
-  {
-    executor_.on_work_finished();
-  }
-
-  execution_context& context() ASIO_NOEXCEPT
-  {
-    return executor_.context();
-  }
-
-  void dispatch(ASIO_MOVE_ARG(function) f)
-  {
-    executor_.dispatch(ASIO_MOVE_CAST(function)(f), allocator_);
-  }
-
-  void post(ASIO_MOVE_ARG(function) f)
-  {
-    executor_.post(ASIO_MOVE_CAST(function)(f), allocator_);
-  }
-
-  void defer(ASIO_MOVE_ARG(function) f)
-  {
-    executor_.defer(ASIO_MOVE_CAST(function)(f), allocator_);
-  }
-
-  type_id_result_type target_type() const ASIO_NOEXCEPT
-  {
-    return type_id<system_executor>();
-  }
-
-  void* target() ASIO_NOEXCEPT
-  {
-    return &executor_;
-  }
-
-  const void* target() const ASIO_NOEXCEPT
-  {
-    return &executor_;
-  }
-
-  bool equals(const impl_base* e) const ASIO_NOEXCEPT
-  {
-    return this == e;
-  }
-
-private:
-  system_executor executor_;
-  Allocator allocator_;
-};
-
 template <typename Executor>
 executor::executor(Executor e)
   : impl_(impl<Executor, std::allocator<void> >::create(e))
@@ -344,10 +262,7 @@ void executor::dispatch(ASIO_MOVE_ARG(Function) f,
     const Allocator& a) const
 {
   impl_base* i = get_impl();
-  if (i->fast_dispatch_)
-    system_executor().dispatch(ASIO_MOVE_CAST(Function)(f), a);
-  else
-    i->dispatch(function(ASIO_MOVE_CAST(Function)(f), a));
+  i->dispatch(function(ASIO_MOVE_CAST(Function)(f), a));
 }
 
 template <typename Function, typename Allocator>

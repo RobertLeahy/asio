@@ -333,9 +333,6 @@ nobase_include_HEADERS = \
 	asio/impl/spawn.hpp \
 	asio/impl/src.cpp \
 	asio/impl/src.hpp \
-	asio/impl/system_context.hpp \
-	asio/impl/system_context.ipp \
-	asio/impl/system_executor.hpp \
 	asio/impl/thread_pool.hpp \
 	asio/impl/thread_pool.ipp \
 	asio/impl/use_awaitable.hpp \
@@ -443,9 +440,8 @@ nobase_include_HEADERS = \
 	asio/steady_timer.hpp \
 	asio/strand.hpp \
 	asio/streambuf.hpp \
-	asio/system_context.hpp \
+	asio/inline_executor.hpp \
 	asio/system_error.hpp \
-	asio/system_executor.hpp \
 	asio/system_timer.hpp \
 	asio/this_coro.hpp \
 	asio/thread.hpp \

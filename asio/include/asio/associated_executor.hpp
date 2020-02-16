@@ -15,14 +15,17 @@
 # pragma once
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
+#include <stdexcept>
 #include "asio/detail/config.hpp"
 #include "asio/detail/type_traits.hpp"
+#include "asio/execution_context.hpp"
+#include "asio/inline_executor.hpp"
 #include "asio/is_executor.hpp"
-#include "asio/system_executor.hpp"
 
 #include "asio/detail/push_options.hpp"
 
 namespace asio {
+
 namespace detail {
 
 template <typename>
@@ -75,7 +78,7 @@ struct associated_executor_impl<T, E,
  * @li Provide a noexcept static member function named @c get, callable as @c
  * get(t,e) and with return type @c type.
  */
-template <typename T, typename Executor = system_executor>
+template <typename T, typename Executor = inline_executor>
 struct associated_executor
 {
   /// If @c T has a nested type @c executor_type, <tt>T::executor_type</tt>.
@@ -137,7 +140,7 @@ get_associated_executor(const T& t, ExecutionContext& ctx,
 
 #if defined(ASIO_HAS_ALIAS_TEMPLATES)
 
-template <typename T, typename Executor = system_executor>
+template <typename T, typename Executor = inline_executor>
 using associated_executor_t = typename associated_executor<T, Executor>::type;
 
 #endif // defined(ASIO_HAS_ALIAS_TEMPLATES)
